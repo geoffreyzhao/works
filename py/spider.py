@@ -42,7 +42,17 @@ def parseItem(item):
     pos_company_type = pos_company_industry.select('span')[0].string
     pos_company_resource = pos_company_industry.select('span')[1].string
 
-    print(pos_name+'-----'+pos_site+'-----'+pos_pub_time+'-----'+pos_company_name+'-----'+pos_company_type+'-----'+pos_company_resource)
+    return {
+        "name": pos_name,
+        "site": pos_site,
+        "datetime": pos_pub_time,
+        "companyName": pos_company_name,
+        "companyType": pos_company_type,
+        "companyResource": pos_company_resource,
+        "timestamp": datetime.now()
+    }
+
+    # print(pos_name+'-----'+pos_site+'-----'+pos_pub_time+'-----'+pos_company_name+'-----'+pos_company_type+'-----'+pos_company_resource)
 
 def cvrtDatetime(str):
 
@@ -57,11 +67,18 @@ def cvrtDatetime(str):
         result_date = str + ' 00:00:00'
     else:   # 几天前，计算日期并补全时间
 
-        days = str[0:1]
+        days = int(str[0:1])
         result_date = (datetime.now() - timedelta(days = days)).strftime('%Y-%m-%d %H:%M:%S')
 
-    return result_date
-    
+    return datetime.strptime(result_date, '%Y-%m-%d %H:%M:%S')
 
-for item in position_items:
-    parseItem(item)
+def getPosList():
+    posList = []
+
+    for item in position_items:
+        posList.append(parseItem(item))
+
+    return posList
+
+# for item in position_items:
+#     parseItem(item)
