@@ -7,14 +7,22 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 
-html = requests.get('http://www.lagou.com')
-html.encoding = 'utf-8'
-soup = BeautifulSoup(html.text, 'lxml')
+# html = requests.get('http://www.lagou.com')
+# html.encoding = 'utf-8'
+# soup = BeautifulSoup(html.text, 'lxml')
 
 # with open('../doc/info.txt', 'w', encoding='utf-8') as f:
 #     f.write(soup.prettify())
 
-position_items = soup.select('.hot_posHotPosition .position_list_item')
+# position_items = soup.select('.hot_posHotPosition .position_list_item')
+
+def getLagou():
+    html = requests.get('http://www.lagou.com')
+    html.encoding = 'utf-8'
+    soup = BeautifulSoup(html.text, 'lxml')
+    position_items = soup.select('.hot_posHotPosition .position_list_item')
+
+    return position_items
 
 def parseItem(item):
 
@@ -29,6 +37,19 @@ def parseItem(item):
     pos_name = position_link.contents[0]
     # 地点
     pos_site = position_link.contents[1].string.replace('[', '').replace(']', '')
+
+    pos_treatment = pli_top_l.find_all('div', recursive = False)[1]
+
+    #薪资
+    pos_salary_section = pos_treatment.find('span', class_='salary').string
+    pos_salary_min = int(pos_salary_section.split('-')[0].replace('k',''))
+    pos_salary_max = int(pos_salary_section.split('-')[1].replace('k',''))
+
+    #经验
+    pos_experience = pos_treatment.find_all('span', recursive = False)[1].contents[1].replace('经验','')
+
+    #学历
+    pos_education = pos_treatment.find_all('span', recursive = False)[2].string
 
     # 发布时间
     pos_pub_time = position_link.find_parent().find_next('span', class_='fl').string
@@ -47,6 +68,10 @@ def parseItem(item):
         "site": pos_site,
         "datetime": pos_pub_time,
         "companyName": pos_company_name,
+        "salaryMin": pos_salary_min,
+        "salaryMax": pos_salary_max,
+        "workExperience": pos_experience,
+        "education": pos_education,
         "companyType": pos_company_type,
         "companyResource": pos_company_resource,
         "timestamp": datetime.now()
@@ -73,12 +98,17 @@ def cvrtDatetime(str):
     return datetime.strptime(result_date, '%Y-%m-%d %H:%M:%S')
 
 def getPosList():
+
+    position_items = getLagou()
     posList = []
 
     for item in position_items:
         posList.append(parseItem(item))
 
     return posList
+
+if __name__ == '__main__':
+    getPosList()
 
 # for item in position_items:
 #     parseItem(item)
