@@ -58,3 +58,6 @@ target/
 
 # Python IDE Pycharm
 .idea/
+
+# node modules
+node_modules/
