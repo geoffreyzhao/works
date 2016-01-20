@@ -17,7 +17,16 @@ from datetime import datetime, timedelta
 # position_items = soup.select('.hot_posHotPosition .position_list_item')
 
 def getLagou():
-    html = requests.get('http://www.lagou.com')
+
+    url = 'http://www.lagou.com/jobs/companyAjax.json'
+    payload = {
+        'px': 'default',
+        'city': '上海',
+        'pn': 1,
+        'kd': '前端开发'
+    }
+
+    html = requests.get(url, params=payload)
     html.encoding = 'utf-8'
     soup = BeautifulSoup(html.text, 'lxml')
     position_items = soup.select('.hot_posHotPosition .position_list_item')
@@ -103,6 +112,7 @@ def getPosList():
     posList = []
 
     for item in position_items:
+        print(parseItem(item))
         posList.append(parseItem(item))
 
     return posList
