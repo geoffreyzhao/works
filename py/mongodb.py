@@ -4,7 +4,7 @@
 from pymongo import MongoClient
 import spider
 
-client = MongoClient('mongodb://localhost:27017/') # 连接本机数据库
+client = MongoClient('mongodb://localhost:27017/')  # 连接本机数据库
 db = client.works  # 进入数据库
 collection = db.position_info   # 获取Collection
 
