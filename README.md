@@ -1,5 +1,6 @@
 # works
 掌握技能：MongoDB+Python+NodeJS+AngularJS+RequiresJS+CSS3+SCSS+Gulp+MarkDown
+功能简介：获取拉勾网上海站web前端招聘信息，自定义过滤条件，新增按公司地址，公司规模人数，简历处理及时率，简历处理用时等条件查询。PC/mobile页面，数据统计，显示图形，swiper&iscroll, 每24h更新一次数据库数据。分三个表：position,company,publisher;position关联company_id,publisher_id。职位加入“我的收藏”，用sessionStorage保存，发送收藏职位到邮箱然后清空收藏，页面卸载时也可以执行此操作。
 
 ## NodeJS篇
 
@@ -19,9 +20,9 @@ MarkDown常用格式语法（[参考链接](http://www.cnblogs.com/hnrainll/p/35
   + \\\` 反引号
   + \\\* 星号
   + \\\_ 下划线
-  + \\\{\} 大括号
-  + \\\[\] 中括号
-  + \\\(\) 小括号
+  + \\\{\\\} 大括号
+  + \\\[\\\] 中括号
+  + \\\(\\\) 小括号
   + \\\# 井号
   + \\\+ 加号
   + \\\- 减号
