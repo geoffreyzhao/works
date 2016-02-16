@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-__author__ = 'Geoffrey Zhao'
+# __author__ = 'Geoffrey Zhao'
 
 import requests
 from bs4 import BeautifulSoup
